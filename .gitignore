@@ -1,0 +1,13 @@
+build/
+cmake-build-*/
+.vscode/
+.idea/
+*.o
+*.obj
+*.exe
+*.out
+__pycache__/
+*.pyc
+.venv/
+results/*.csv
+results/*.png
