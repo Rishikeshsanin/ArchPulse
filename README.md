@@ -2,7 +2,7 @@
 
 ## CPU & Heterogeneous Compute Performance Workbench
 
-ArchPulse is a **C++20 systems-performance workbench** for exploring computer architecture, CPU behavior, parallel execution, and performance optimization. It combines configurable cache simulation, a five-stage CPU pipeline model, branch-prediction analysis, multithreaded compute benchmarks, and Python-based performance visualization.
+ArchPulse is a **C++20 systems-performance workbench** for exploring computer architecture, CPU behavior, parallel execution, and performance optimization. It combines configurable cache simulation, a five-stage CPU pipeline model, branch-prediction analysis, multithreaded compute benchmarks, Python-based performance visualization, and an interactive browser companion.
 
 > **simulate -> benchmark -> measure -> analyze**
 
@@ -14,6 +14,7 @@ ArchPulse is a **C++20 systems-performance workbench** for exploring computer ar
 - Custom **C++20 thread pool** using `std::thread`, mutexes, condition variables, futures, and a synchronization-safe task queue.
 - Parallel **matrix multiplication** and **Gaussian image-convolution** workloads with runtime, throughput, and scaling measurements.
 - CSV metrics plus **Python / Pandas / Matplotlib** analytics.
+- Interactive **ArchPulse Web Lab** for cache, pipeline, branch-prediction, and parallel-scaling experiments in the browser.
 - CTest unit tests and **GitHub Actions CI on Linux and Windows**.
 
 ### Build
@@ -53,7 +54,7 @@ python -m pip install -r analytics/requirements.txt
 python analytics/analyze.py results
 ```
 
-Runtime and speedup are measured on the machine running ArchPulse; the project intentionally avoids hard-coded performance claims.
+Runtime and speedup are measured on the machine running ArchPulse; the project intentionally avoids hard-coded performance claims. The browser Scaling Lab is explicitly an analytical model, not a hardware benchmark.
 
 ### Engineering concepts
 
@@ -61,7 +62,7 @@ Runtime and speedup are measured on the machine running ArchPulse; the project i
 
 ### Current scope
 
-Implemented: cache/LRU simulation, pipeline/hazard model, four branch predictors, custom thread pool, matrix/convolution benchmarks, scaling measurements, CSV export, Python charts, tests, and CI.
+Implemented: cache/LRU simulation, pipeline/hazard model, four branch predictors, custom thread pool, matrix/convolution benchmarks, scaling measurements, CSV export, Python charts, tests, CI, and the interactive Web Lab.
 
 Planned: OpenCL GPU kernels and CPU-vs-GPU benchmarking, multi-level caches, SIMD paths, trace ingestion, hardware performance counters, and ML-based runtime prediction.
 
