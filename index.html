@@ -1,0 +1,113 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <meta name="description" content="ArchPulse Web Lab — interactive CPU cache, pipeline, branch prediction and parallel scaling visualizer." />
+  <title>ArchPulse — CPU & Heterogeneous Compute Performance Workbench</title>
+  <link rel="stylesheet" href="/style.css" />
+</head>
+<body>
+  <div class="noise"></div>
+  <header class="topbar">
+    <a class="brand" href="#top"><span class="brand-mark">AP</span><span>ArchPulse</span></a>
+    <nav><a href="#lab">Web Lab</a><a href="#architecture">Architecture</a><a href="https://github.com/Rishikeshsanin/ArchPulse" target="_blank" rel="noreferrer">GitHub ↗</a></nav>
+  </header>
+
+  <main id="top">
+    <section class="hero">
+      <div class="hero-copy">
+        <div class="eyebrow"><span class="pulse-dot"></span> C++20 SYSTEMS PERFORMANCE WORKBENCH</div>
+        <h1>See what happens <em>inside</em> the CPU.</h1>
+        <p>ArchPulse combines cache simulation, pipeline and branch-prediction analysis, multithreaded benchmarks, and performance analytics. This Web Lab is an interactive companion to the native C++ engine.</p>
+        <div class="hero-actions"><a class="btn primary" href="#lab">Launch Web Lab</a><a class="btn ghost" href="https://github.com/Rishikeshsanin/ArchPulse" target="_blank" rel="noreferrer">View source</a></div>
+        <div class="stack"><span>C++20</span><span>CMake</span><span>Python</span><span>Multithreading</span><span>Computer Architecture</span><span>CI</span></div>
+      </div>
+      <div class="hero-panel panel glow">
+        <div class="panel-head"><span>LIVE SYSTEM MODEL</span><span class="status">● READY</span></div>
+        <div class="cpu-diagram">
+          <div class="core">CORE 0<div class="tiny">IF · ID · EX · MEM · WB</div></div>
+          <div class="core">CORE 1<div class="tiny">IF · ID · EX · MEM · WB</div></div>
+          <div class="cache">L1 CACHE<div class="tiny">32 KB · 8-WAY · 64 B</div></div>
+          <div class="cache wide">SHARED MEMORY / BENCHMARK METRICS</div>
+        </div>
+        <div class="telemetry"><div><b id="heroHit">88.4%</b><span>cache hit</span></div><div><b id="heroCpi">1.24</b><span>est. CPI</span></div><div><b id="heroPred">91.2%</b><span>predictor</span></div></div>
+      </div>
+    </section>
+
+    <section class="stats-strip">
+      <div><strong>4</strong><span>branch predictors</span></div><div><strong>5</strong><span>pipeline stages</span></div><div><strong>3</strong><span>parallel workloads</span></div><div><strong>2</strong><span>CI platforms</span></div>
+    </section>
+
+    <section id="lab" class="lab-section">
+      <div class="section-title"><div><span class="kicker">INTERACTIVE WEB LAB</span><h2>Experiment with architecture.</h2></div><p>Run educational models directly in the browser. Native benchmark measurements remain in the C++ CLI.</p></div>
+      <div class="tabs" role="tablist"><button class="tab active" data-tab="cache">Cache Lab</button><button class="tab" data-tab="pipeline">Pipeline Lab</button><button class="tab" data-tab="scaling">Scaling Lab</button></div>
+
+      <section class="lab-grid tab-pane active" id="cachePane">
+        <div class="panel controls">
+          <div class="panel-head"><span>CACHE CONFIGURATION</span><span>LRU MODEL</span></div>
+          <label>Cache size <output id="cacheSizeOut">32 KB</output><input id="cacheSize" type="range" min="4" max="128" step="4" value="32"></label>
+          <label>Block size <select id="blockSize"><option>32</option><option selected>64</option><option>128</option></select></label>
+          <label>Associativity <select id="ways"><option>1</option><option>2</option><option>4</option><option selected>8</option><option>16</option></select></label>
+          <label>Access pattern <select id="pattern"><option value="sequential">Sequential</option><option value="random">Random</option><option value="mixed" selected>Mixed locality</option></select></label>
+          <label>Memory accesses <output id="accessesOut">50,000</output><input id="accesses" type="range" min="5000" max="100000" step="5000" value="50000"></label>
+          <button id="runCache" class="btn primary full">Run cache simulation</button>
+        </div>
+        <div class="panel result-panel">
+          <div class="panel-head"><span>RESULTS</span><span id="cacheRunId">RUN #001</span></div>
+          <div class="metric-grid"><div><span>Hit rate</span><strong id="hitRate">—</strong></div><div><span>Miss rate</span><strong id="missRate">—</strong></div><div><span>Hits</span><strong id="hits">—</strong></div><div><span>Misses</span><strong id="misses">—</strong></div></div>
+          <canvas id="cacheChart" width="900" height="260" aria-label="Cache hit and miss chart"></canvas>
+          <div class="terminal" id="cacheTerminal">$ archpulse cache --ready\nWaiting for experiment...</div>
+        </div>
+      </section>
+
+      <section class="lab-grid tab-pane" id="pipelinePane">
+        <div class="panel controls">
+          <div class="panel-head"><span>PIPELINE CONFIGURATION</span><span>5-STAGE MODEL</span></div>
+          <label>Instruction count <output id="instOut">25,000</output><input id="instructions" type="range" min="5000" max="100000" step="5000" value="25000"></label>
+          <label>Branch frequency <output id="branchOut">18%</output><input id="branchFreq" type="range" min="5" max="40" step="1" value="18"></label>
+          <label>Dependency pressure <output id="depOut">24%</output><input id="depPressure" type="range" min="5" max="50" step="1" value="24"></label>
+          <label>Branch predictor <select id="predictor"><option value="taken">Always Taken</option><option value="not">Always Not Taken</option><option value="1bit">1-bit</option><option value="2bit" selected>2-bit Saturating</option></select></label>
+          <button id="runPipeline" class="btn primary full">Run pipeline simulation</button>
+        </div>
+        <div class="panel result-panel">
+          <div class="pipeline-viz"><div>IF</div><i>→</i><div>ID</div><i>→</i><div>EX</div><i>→</i><div>MEM</div><i>→</i><div>WB</div></div>
+          <div class="metric-grid"><div><span>CPI</span><strong id="cpi">—</strong></div><div><span>IPC</span><strong id="ipc">—</strong></div><div><span>Stalls</span><strong id="stalls">—</strong></div><div><span>Prediction</span><strong id="prediction">—</strong></div></div>
+          <canvas id="pipelineChart" width="900" height="260" aria-label="Pipeline comparison chart"></canvas>
+          <div class="terminal" id="pipelineTerminal">$ archpulse pipeline --ready\nWaiting for experiment...</div>
+        </div>
+      </section>
+
+      <section class="lab-grid tab-pane" id="scalingPane">
+        <div class="panel controls">
+          <div class="panel-head"><span>PARALLEL SCALING MODEL</span><span>AMDahl explorer</span></div>
+          <label>Parallel fraction <output id="parallelOut">92%</output><input id="parallelFraction" type="range" min="50" max="99" step="1" value="92"></label>
+          <label>Maximum threads <select id="maxThreads"><option>4</option><option selected>8</option><option>16</option><option>32</option></select></label>
+          <label>Workload <select id="workload"><option>Matrix multiplication</option><option>Gaussian convolution</option><option>Parallel sort</option></select></label>
+          <div class="callout"><b>Important</b><p>This tab is an analytical scaling model. Real runtimes come from the native C++ benchmark engine on the machine where ArchPulse runs.</p></div>
+          <button id="runScaling" class="btn primary full">Model scaling</button>
+        </div>
+        <div class="panel result-panel">
+          <div class="metric-grid"><div><span>Peak modeled speedup</span><strong id="peakSpeedup">—</strong></div><div><span>Efficiency</span><strong id="efficiency">—</strong></div><div><span>Threads</span><strong id="threadMetric">—</strong></div><div><span>Serial floor</span><strong id="serialFloor">—</strong></div></div>
+          <canvas id="scalingChart" width="900" height="320" aria-label="Parallel scaling chart"></canvas>
+          <div class="terminal" id="scalingTerminal">$ archpulse scale --ready\nWaiting for model...</div>
+        </div>
+      </section>
+    </section>
+
+    <section id="architecture" class="architecture-section">
+      <div class="section-title"><div><span class="kicker">PROJECT ARCHITECTURE</span><h2>Native core. Browser companion.</h2></div></div>
+      <div class="architecture-grid">
+        <article class="feature"><span>01</span><h3>C++ Simulation Core</h3><p>Set-associative cache modeling, LRU eviction, five-stage pipeline behavior, hazard accounting, CPI/IPC and branch predictors.</p></article>
+        <article class="feature"><span>02</span><h3>Parallel Benchmark Engine</h3><p>Custom thread pool using threads, mutexes, condition variables and futures for matrix, convolution and scaling studies.</p></article>
+        <article class="feature"><span>03</span><h3>Analytics Pipeline</h3><p>Structured CSV output feeds Python, Pandas and Matplotlib reports for cache, pipeline and thread-scaling experiments.</p></article>
+        <article class="feature"><span>04</span><h3>Cross-Platform CI</h3><p>CMake and CTest build and validate ArchPulse on Linux and Windows through GitHub Actions.</p></article>
+      </div>
+      <div class="flow panel"><div>C++20 CORE</div><i>→</i><div>CSV METRICS</div><i>→</i><div>PYTHON ANALYTICS</div><i>→</i><div>WEB LAB</div></div>
+    </section>
+  </main>
+
+  <footer><div><b>ArchPulse</b><span>CPU & Heterogeneous Compute Performance Workbench</span></div><a href="https://github.com/Rishikeshsanin/ArchPulse" target="_blank" rel="noreferrer">github.com/Rishikeshsanin/ArchPulse ↗</a></footer>
+  <script src="/app.js"></script>
+</body>
+</html>
