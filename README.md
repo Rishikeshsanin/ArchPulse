@@ -2,6 +2,8 @@
 
 ## CPU & Heterogeneous Compute Performance Workbench
 
+**Live Web Lab:** https://archpulse-six.vercel.app
+
 ArchPulse is a **C++20 systems-performance workbench** for exploring computer architecture, CPU behavior, parallel execution, and performance optimization. It combines configurable cache simulation, a five-stage CPU pipeline model, branch-prediction analysis, multithreaded compute benchmarks, Python-based performance visualization, and an interactive browser companion.
 
 > **simulate -> benchmark -> measure -> analyze**
