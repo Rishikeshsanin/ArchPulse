@@ -3,6 +3,7 @@ on:
   push:
     branches: [main]
   pull_request:
+
 jobs:
   build-and-test:
     strategy:
@@ -15,5 +16,20 @@ jobs:
         run: cmake -S . -B build -DARCHPULSE_WARNINGS_AS_ERRORS=ON
       - name: Build
         run: cmake --build build --config Release
-      - name: Test
+      - name: Test native engine
         run: ctest --test-dir build -C Release --output-on-failure
+
+  web-smoke:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: JavaScript syntax checks
+        run: |
+          node --check app.js
+          node --check worker.js
+          node --check sw.js
+      - name: Observatory smoke checks
+        run: node tests/web_smoke.mjs
