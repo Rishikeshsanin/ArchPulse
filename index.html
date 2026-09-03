@@ -3,111 +3,131 @@
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <meta name="description" content="ArchPulse Web Lab — interactive CPU cache, pipeline, branch prediction and parallel scaling visualizer." />
-  <title>ArchPulse — CPU & Heterogeneous Compute Performance Workbench</title>
+  <meta name="theme-color" content="#070a0f" />
+  <meta name="description" content="ArchPulse Observatory — an interactive CPU, memory, branch prediction, parallel scaling and GPU compute laboratory." />
+  <title>ArchPulse Observatory — CPU & Heterogeneous Compute Lab</title>
+  <link rel="manifest" href="/manifest.webmanifest" />
   <link rel="stylesheet" href="/style.css" />
 </head>
 <body>
-  <div class="noise"></div>
-  <header class="topbar">
-    <a class="brand" href="#top"><span class="brand-mark">AP</span><span>ArchPulse</span></a>
-    <nav><a href="#lab">Web Lab</a><a href="#architecture">Architecture</a><a href="https://github.com/Rishikeshsanin/ArchPulse" target="_blank" rel="noreferrer">GitHub ↗</a></nav>
-  </header>
-
-  <main id="top">
-    <section class="hero">
-      <div class="hero-copy">
-        <div class="eyebrow"><span class="pulse-dot"></span> C++20 SYSTEMS PERFORMANCE WORKBENCH</div>
-        <h1>See what happens <em>inside</em> the CPU.</h1>
-        <p>ArchPulse combines cache simulation, pipeline and branch-prediction analysis, multithreaded benchmarks, and performance analytics. This Web Lab is an interactive companion to the native C++ engine.</p>
-        <div class="hero-actions"><a class="btn primary" href="#lab">Launch Web Lab</a><a class="btn ghost" href="https://github.com/Rishikeshsanin/ArchPulse" target="_blank" rel="noreferrer">View source</a></div>
-        <div class="stack"><span>C++20</span><span>CMake</span><span>Python</span><span>Multithreading</span><span>Computer Architecture</span><span>CI</span></div>
+<div class="grid-bg"></div><div class="scanline"></div>
+<header class="topbar">
+  <a class="brand" href="#top"><span class="brand-chip">AP</span><span><b>ArchPulse</b><small>OBSERVATORY</small></span></a>
+  <nav><a href="#command">Command Center</a><a href="#labs">Labs</a><a href="#architecture">Architecture</a><a href="https://github.com/Rishikeshsanin/ArchPulse" target="_blank" rel="noreferrer">Source ↗</a></nav>
+  <div class="top-actions"><button class="icon-btn" id="shareBtn" title="Copy share link">Share</button><button class="icon-btn" id="installBtn" hidden>Install</button></div>
+</header>
+<main id="top">
+  <section class="hero">
+    <div class="hero-copy">
+      <div class="eyebrow"><span class="live-dot"></span> NATIVE C++20 CORE · INTERACTIVE WEB OBSERVATORY</div>
+      <h1>Measure the machine.<br><span>Interrogate every cycle.</span></h1>
+      <p>ArchPulse is a performance-engineering playground for cache locality, TLB behavior, instruction pipelines, branch prediction, parallel scaling and GPU compute. The native C++ engine performs benchmarkable experiments; the Observatory makes the architecture explorable in real time.</p>
+      <div class="hero-actions"><a class="btn primary" href="#labs">Enter Observatory</a><button class="btn" id="heroRun">Run diagnostic sweep</button></div>
+      <div class="hero-tags"><span>C++20</span><span>Computer Architecture</span><span>Multithreading</span><span>WebGPU</span><span>Python Analytics</span><span>Cross-platform CI</span></div>
+    </div>
+    <div class="silicon-card panel">
+      <div class="panel-title"><span>SYSTEM TELEMETRY</span><span class="green">● LIVE</span></div>
+      <div class="die">
+        <div class="die-core c0"><b>CORE 0</b><small>IF ID EX MEM WB</small></div><div class="die-core c1"><b>CORE 1</b><small>IF ID EX MEM WB</small></div>
+        <div class="die-core c2"><b>CORE 2</b><small>THREAD POOL</small></div><div class="die-core c3"><b>CORE 3</b><small>BENCHMARK</small></div>
+        <div class="die-cache"><b>L1 / L2 CACHE FABRIC</b><small>SET ASSOCIATIVE · LRU · TRACEABLE</small></div>
       </div>
-      <div class="hero-panel panel glow">
-        <div class="panel-head"><span>LIVE SYSTEM MODEL</span><span class="status">● READY</span></div>
-        <div class="cpu-diagram">
-          <div class="core">CORE 0<div class="tiny">IF · ID · EX · MEM · WB</div></div>
-          <div class="core">CORE 1<div class="tiny">IF · ID · EX · MEM · WB</div></div>
-          <div class="cache">L1 CACHE<div class="tiny">32 KB · 8-WAY · 64 B</div></div>
-          <div class="cache wide">SHARED MEMORY / BENCHMARK METRICS</div>
-        </div>
-        <div class="telemetry"><div><b id="heroHit">88.4%</b><span>cache hit</span></div><div><b id="heroCpi">1.24</b><span>est. CPI</span></div><div><b id="heroPred">91.2%</b><span>predictor</span></div></div>
+      <div class="telemetry-row"><div><span>Logical cores</span><b id="sysCores">—</b></div><div><span>GPU compute</span><b id="sysGpu">CHECK</b></div><div><span>Session runs</span><b id="sysRuns">0</b></div></div>
+    </div>
+  </section>
+
+  <section id="command" class="command-section">
+    <div class="section-head"><div><span class="kicker">COMMAND CENTER</span><h2>One dashboard. Six performance domains.</h2></div><p>Every metric is marked as <b>modeled</b> or <b>measured</b>. Browser experiments never pretend to be native hardware counters.</p></div>
+    <div class="command-grid">
+      <article class="command-card"><span>01</span><h3>Memory Hierarchy</h3><p>L1/L2/TLB locality, replacement behavior, heatmaps and AMAT.</p><button data-jump="memory">Open lab →</button></article>
+      <article class="command-card"><span>02</span><h3>Pipeline Observatory</h3><p>Hazards, CPI/IPC, five predictors and a cycle timeline.</p><button data-jump="pipeline">Open lab →</button></article>
+      <article class="command-card"><span>03</span><h3>Trace Studio</h3><p>Paste custom memory/instruction traces and inspect them step-by-step.</p><button data-jump="trace">Open lab →</button></article>
+      <article class="command-card"><span>04</span><h3>GPU Compute</h3><p>Real browser CPU vs WebGPU vector-add benchmark with verification.</p><button data-jump="gpu">Open lab →</button></article>
+      <article class="command-card"><span>05</span><h3>Scaling Lab</h3><p>Amdahl and Gustafson scaling models with efficiency analysis.</p><button data-jump="scaling">Open lab →</button></article>
+      <article class="command-card"><span>06</span><h3>Run Vault</h3><p>Persist, compare, export and replay experiments locally.</p><button data-jump="vault">Open vault →</button></article>
+    </div>
+  </section>
+
+  <section id="labs" class="labs-section">
+    <div class="lab-shell panel">
+      <aside class="lab-sidebar">
+        <div class="sidebar-label">LAB MODULES</div>
+        <button class="lab-tab active" data-tab="memory"><i>◫</i><span>Memory Hierarchy<small>Cache · TLB · AMAT</small></span></button>
+        <button class="lab-tab" data-tab="pipeline"><i>⇥</i><span>Pipeline<small>CPI · Hazards · Predictors</small></span></button>
+        <button class="lab-tab" data-tab="trace"><i>⌁</i><span>Trace Studio<small>Custom workloads</small></span></button>
+        <button class="lab-tab" data-tab="gpu"><i>◇</i><span>GPU Compute<small>Measured WebGPU</small></span></button>
+        <button class="lab-tab" data-tab="scaling"><i>↗</i><span>Scaling<small>Amdahl · Gustafson</small></span></button>
+        <button class="lab-tab" data-tab="vault"><i>▣</i><span>Run Vault<small>Compare · Export</small></span></button>
+        <div class="sidebar-foot"><span>Keyboard</span><small><kbd>R</kbd> run current · <kbd>1-6</kbd> switch lab</small></div>
+      </aside>
+      <div class="lab-content">
+        <div class="lab-topline"><div><span id="labStatus" class="status-pill">READY</span><span id="labSubtitle">Memory Hierarchy Observatory</span></div><div class="preset-row"><select id="preset"><option value="balanced">Balanced workload</option><option value="streaming">Streaming / sequential</option><option value="gaming">Gaming-like locality</option><option value="ml">ML inference-like</option><option value="compiler">Compiler-like random</option></select><button class="mini-btn" id="saveRunBtn">Save run</button></div></div>
+
+        <section class="lab-pane active" id="memoryPane">
+          <div class="split-grid">
+            <div class="controls-box">
+              <h3>Memory configuration</h3>
+              <label>L1 size <output id="l1Out">32 KiB</output><input id="l1Size" type="range" min="8" max="128" step="8" value="32"></label>
+              <label>L2 size <output id="l2Out">512 KiB</output><input id="l2Size" type="range" min="128" max="2048" step="128" value="512"></label>
+              <div class="two"><label>Block size<select id="blockSize"><option>32</option><option selected>64</option><option>128</option></select></label><label>Ways<select id="ways"><option>1</option><option>2</option><option>4</option><option selected>8</option><option>16</option></select></label></div>
+              <div class="two"><label>TLB entries<select id="tlbEntries"><option>16</option><option>32</option><option selected>64</option><option>128</option></select></label><label>Pattern<select id="pattern"><option value="sequential">Sequential</option><option value="stride">Stride</option><option value="hotset">Hot set</option><option value="mixed" selected>Mixed</option><option value="random">Random</option></select></label></div>
+              <label>Accesses <output id="accessOut">80,000</output><input id="accesses" type="range" min="10000" max="200000" step="10000" value="80000"></label>
+              <button class="btn primary full" id="runMemory">Run memory sweep</button>
+            </div>
+            <div class="results-box">
+              <div class="metric-row six"><div><span>L1 hit</span><b id="l1Hit">—</b></div><div><span>L2 hit*</span><b id="l2Hit">—</b></div><div><span>TLB hit</span><b id="tlbHit">—</b></div><div><span>AMAT*</span><b id="amat">—</b></div><div><span>Evictions</span><b id="evictions">—</b></div><div><span>Locality</span><b id="locality">—</b></div></div>
+              <div class="viz-grid"><div class="viz panel-inset"><div class="viz-title">CACHE SET HEATMAP <small>modeled</small></div><canvas id="heatmap" width="760" height="270"></canvas></div><div class="viz panel-inset"><div class="viz-title">HIERARCHY FLOW <small>modeled</small></div><div class="hierarchy"><div><b>CPU</b><small>request</small></div><i>→</i><div class="hot"><b>L1</b><small id="hL1">—</small></div><i>→</i><div><b>L2</b><small id="hL2">—</small></div><i>→</i><div><b>DRAM</b><small id="hRam">—</small></div></div><div class="tlb-strip"><span>TLB</span><div id="tlbBlocks"></div></div></div></div>
+              <div class="terminal" id="memoryTerminal">$ archpulse memory --ready\nAwaiting experiment.</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="lab-pane" id="pipelinePane">
+          <div class="split-grid">
+            <div class="controls-box"><h3>Pipeline configuration</h3>
+              <label>Instructions <output id="instOut">40,000</output><input id="instructions" type="range" min="5000" max="100000" step="5000" value="40000"></label>
+              <label>Branch frequency <output id="branchOut">18%</output><input id="branchFreq" type="range" min="5" max="40" value="18"></label>
+              <label>Dependency pressure <output id="depOut">25%</output><input id="depPressure" type="range" min="5" max="55" value="25"></label>
+              <label>Predictor<select id="predictor"><option value="taken">Always Taken</option><option value="not">Always Not Taken</option><option value="1bit">1-bit</option><option value="2bit" selected>2-bit Saturating</option><option value="gshare">GShare (8-bit history)</option></select></label>
+              <button class="btn primary full" id="runPipeline">Run pipeline study</button>
+              <button class="btn full" id="comparePredictors">Compare all predictors</button>
+            </div>
+            <div class="results-box">
+              <div class="pipeline-strip"><span>IF</span><i>→</i><span>ID</span><i>→</i><span>EX</span><i>→</i><span>MEM</span><i>→</i><span>WB</span></div>
+              <div class="metric-row"><div><span>CPI</span><b id="cpi">—</b></div><div><span>IPC</span><b id="ipc">—</b></div><div><span>Stalls</span><b id="stalls">—</b></div><div><span>Prediction</span><b id="prediction">—</b></div></div>
+              <div class="viz-grid"><div class="viz panel-inset"><div class="viz-title">PREDICTOR ACCURACY <small>modeled</small></div><canvas id="predictorChart" width="760" height="260"></canvas></div><div class="viz panel-inset"><div class="viz-title">CYCLE TIMELINE <small>12-instruction sample</small></div><div class="timeline" id="pipelineTimeline"></div></div></div>
+              <div class="terminal" id="pipelineTerminal">$ archpulse pipeline --ready\nAwaiting experiment.</div>
+            </div>
+          </div>
+        </section>
+
+        <section class="lab-pane" id="tracePane">
+          <div class="trace-layout"><div class="controls-box"><h3>Trace Studio</h3><p class="help">Accepted lines: <code>R 0x1000</code>, <code>W 0x2000</code>, <code>LOAD R1 0x3000</code>, <code>ADD R2 R1 R3</code>, <code>BRANCH T</code>.</p><textarea id="traceInput" spellcheck="false">R 0x1000\nR 0x1040\nLOAD R1 0x1080\nADD R2 R1 R3\nR 0x1000\nBRANCH T\nW 0x2000\nLOAD R4 0x2040\nADD R5 R4 R2\nBRANCH N</textarea><div class="two-buttons"><button class="btn primary" id="runTrace">Analyze trace</button><button class="btn" id="sampleTrace">Generate sample</button></div></div>
+          <div class="results-box"><div class="metric-row"><div><span>Trace ops</span><b id="traceOps">—</b></div><div><span>Memory ops</span><b id="traceMem">—</b></div><div><span>Cache hit</span><b id="traceHit">—</b></div><div><span>Branches</span><b id="traceBranches">—</b></div></div><div class="trace-table-wrap"><table><thead><tr><th>#</th><th>Operation</th><th>Address / operands</th><th>Cache</th><th>Pipeline note</th></tr></thead><tbody id="traceTable"></tbody></table></div><div class="terminal" id="traceTerminal">$ archpulse trace --stdin\nPaste or generate a trace, then analyze it.</div></div></div>
+        </section>
+
+        <section class="lab-pane" id="gpuPane">
+          <div class="gpu-hero panel-inset"><div><span class="kicker">REAL BROWSER BENCHMARK</span><h3>CPU JavaScript vs WebGPU compute</h3><p>This lab performs actual vector addition in your browser and verifies the output. WebGPU is used only when the browser exposes it.</p></div><div class="gpu-badge" id="gpuBadge">PROBING GPU…</div></div>
+          <div class="split-grid gpu-grid"><div class="controls-box"><h3>Compute workload</h3><label>Vector elements <output id="vectorOut">1,048,576</output><input id="vectorSize" type="range" min="262144" max="4194304" step="262144" value="1048576"></label><button class="btn primary full" id="runGpu">Run verified benchmark</button><div class="callout"><b>Measured</b><p>Times below use <code>performance.now()</code>. GPU time includes command submission/readback, so it is not a pure kernel timer.</p></div></div><div class="results-box"><div class="metric-row"><div><span>CPU time</span><b id="cpuTime">—</b></div><div><span>GPU time</span><b id="gpuTime">—</b></div><div><span>Speedup</span><b id="gpuSpeedup">—</b></div><div><span>Verified</span><b id="gpuVerified">—</b></div></div><canvas id="gpuChart" width="900" height="270"></canvas><div class="terminal" id="gpuTerminal">$ archpulse webgpu --probe\nWaiting for capability check.</div></div></div>
+        </section>
+
+        <section class="lab-pane" id="scalingPane">
+          <div class="split-grid"><div class="controls-box"><h3>Parallel scaling model</h3><label>Parallel fraction <output id="parallelOut">94%</output><input id="parallelFraction" type="range" min="50" max="99" value="94"></label><label>Maximum threads<select id="maxThreads"><option>4</option><option selected>8</option><option>16</option><option>32</option><option>64</option></select></label><label>Model<select id="scaleModel"><option value="amdahl" selected>Amdahl's Law</option><option value="gustafson">Gustafson's Law</option></select></label><button class="btn primary full" id="runScaling">Model scaling</button><div class="callout"><b>Model, not benchmark</b><p>Use the native C++ <code>archpulse scale</code> command for measured runtime on your machine.</p></div></div><div class="results-box"><div class="metric-row"><div><span>Peak speedup</span><b id="peakSpeedup">—</b></div><div><span>Efficiency</span><b id="efficiency">—</b></div><div><span>Serial floor</span><b id="serialFloor">—</b></div><div><span>Threads</span><b id="threadMetric">—</b></div></div><canvas id="scalingChart" width="900" height="310"></canvas><div class="advisor" id="scalingAdvisor"></div></div></div>
+        </section>
+
+        <section class="lab-pane" id="vaultPane">
+          <div class="vault-head"><div><span class="kicker">LOCAL EXPERIMENT HISTORY</span><h3>Run Vault</h3><p>Saved in your browser only. Export a reproducible JSON bundle whenever you want.</p></div><div><button class="btn" id="exportVault">Export JSON</button><button class="btn danger" id="clearVault">Clear vault</button></div></div><div class="vault-grid" id="vaultGrid"></div><div class="empty" id="vaultEmpty">No saved runs yet. Run an experiment and press <b>Save run</b>.</div>
+        </section>
       </div>
-    </section>
+    </div>
+  </section>
 
-    <section class="stats-strip">
-      <div><strong>4</strong><span>branch predictors</span></div><div><strong>5</strong><span>pipeline stages</span></div><div><strong>3</strong><span>parallel workloads</span></div><div><strong>2</strong><span>CI platforms</span></div>
-    </section>
+  <section class="advisor-section"><div class="section-head"><div><span class="kicker">OPTIMIZATION ADVISOR</span><h2>Metrics become engineering decisions.</h2></div><p>Heuristic recommendations are derived from the most recent experiment and always explain why they were suggested.</p></div><div class="advisor-grid" id="advisorGrid"></div></section>
 
-    <section id="lab" class="lab-section">
-      <div class="section-title"><div><span class="kicker">INTERACTIVE WEB LAB</span><h2>Experiment with architecture.</h2></div><p>Run educational models directly in the browser. Native benchmark measurements remain in the C++ CLI.</p></div>
-      <div class="tabs" role="tablist"><button class="tab active" data-tab="cache">Cache Lab</button><button class="tab" data-tab="pipeline">Pipeline Lab</button><button class="tab" data-tab="scaling">Scaling Lab</button></div>
-
-      <section class="lab-grid tab-pane active" id="cachePane">
-        <div class="panel controls">
-          <div class="panel-head"><span>CACHE CONFIGURATION</span><span>LRU MODEL</span></div>
-          <label>Cache size <output id="cacheSizeOut">32 KB</output><input id="cacheSize" type="range" min="4" max="128" step="4" value="32"></label>
-          <label>Block size <select id="blockSize"><option>32</option><option selected>64</option><option>128</option></select></label>
-          <label>Associativity <select id="ways"><option>1</option><option>2</option><option>4</option><option selected>8</option><option>16</option></select></label>
-          <label>Access pattern <select id="pattern"><option value="sequential">Sequential</option><option value="random">Random</option><option value="mixed" selected>Mixed locality</option></select></label>
-          <label>Memory accesses <output id="accessesOut">50,000</output><input id="accesses" type="range" min="5000" max="100000" step="5000" value="50000"></label>
-          <button id="runCache" class="btn primary full">Run cache simulation</button>
-        </div>
-        <div class="panel result-panel">
-          <div class="panel-head"><span>RESULTS</span><span id="cacheRunId">RUN #001</span></div>
-          <div class="metric-grid"><div><span>Hit rate</span><strong id="hitRate">—</strong></div><div><span>Miss rate</span><strong id="missRate">—</strong></div><div><span>Hits</span><strong id="hits">—</strong></div><div><span>Misses</span><strong id="misses">—</strong></div></div>
-          <canvas id="cacheChart" width="900" height="260" aria-label="Cache hit and miss chart"></canvas>
-          <div class="terminal" id="cacheTerminal">$ archpulse cache --ready\nWaiting for experiment...</div>
-        </div>
-      </section>
-
-      <section class="lab-grid tab-pane" id="pipelinePane">
-        <div class="panel controls">
-          <div class="panel-head"><span>PIPELINE CONFIGURATION</span><span>5-STAGE MODEL</span></div>
-          <label>Instruction count <output id="instOut">25,000</output><input id="instructions" type="range" min="5000" max="100000" step="5000" value="25000"></label>
-          <label>Branch frequency <output id="branchOut">18%</output><input id="branchFreq" type="range" min="5" max="40" step="1" value="18"></label>
-          <label>Dependency pressure <output id="depOut">24%</output><input id="depPressure" type="range" min="5" max="50" step="1" value="24"></label>
-          <label>Branch predictor <select id="predictor"><option value="taken">Always Taken</option><option value="not">Always Not Taken</option><option value="1bit">1-bit</option><option value="2bit" selected>2-bit Saturating</option></select></label>
-          <button id="runPipeline" class="btn primary full">Run pipeline simulation</button>
-        </div>
-        <div class="panel result-panel">
-          <div class="pipeline-viz"><div>IF</div><i>→</i><div>ID</div><i>→</i><div>EX</div><i>→</i><div>MEM</div><i>→</i><div>WB</div></div>
-          <div class="metric-grid"><div><span>CPI</span><strong id="cpi">—</strong></div><div><span>IPC</span><strong id="ipc">—</strong></div><div><span>Stalls</span><strong id="stalls">—</strong></div><div><span>Prediction</span><strong id="prediction">—</strong></div></div>
-          <canvas id="pipelineChart" width="900" height="260" aria-label="Pipeline comparison chart"></canvas>
-          <div class="terminal" id="pipelineTerminal">$ archpulse pipeline --ready\nWaiting for experiment...</div>
-        </div>
-      </section>
-
-      <section class="lab-grid tab-pane" id="scalingPane">
-        <div class="panel controls">
-          <div class="panel-head"><span>PARALLEL SCALING MODEL</span><span>AMDahl explorer</span></div>
-          <label>Parallel fraction <output id="parallelOut">92%</output><input id="parallelFraction" type="range" min="50" max="99" step="1" value="92"></label>
-          <label>Maximum threads <select id="maxThreads"><option>4</option><option selected>8</option><option>16</option><option>32</option></select></label>
-          <label>Workload <select id="workload"><option>Matrix multiplication</option><option>Gaussian convolution</option><option>Parallel sort</option></select></label>
-          <div class="callout"><b>Important</b><p>This tab is an analytical scaling model. Real runtimes come from the native C++ benchmark engine on the machine where ArchPulse runs.</p></div>
-          <button id="runScaling" class="btn primary full">Model scaling</button>
-        </div>
-        <div class="panel result-panel">
-          <div class="metric-grid"><div><span>Peak modeled speedup</span><strong id="peakSpeedup">—</strong></div><div><span>Efficiency</span><strong id="efficiency">—</strong></div><div><span>Threads</span><strong id="threadMetric">—</strong></div><div><span>Serial floor</span><strong id="serialFloor">—</strong></div></div>
-          <canvas id="scalingChart" width="900" height="320" aria-label="Parallel scaling chart"></canvas>
-          <div class="terminal" id="scalingTerminal">$ archpulse scale --ready\nWaiting for model...</div>
-        </div>
-      </section>
-    </section>
-
-    <section id="architecture" class="architecture-section">
-      <div class="section-title"><div><span class="kicker">PROJECT ARCHITECTURE</span><h2>Native core. Browser companion.</h2></div></div>
-      <div class="architecture-grid">
-        <article class="feature"><span>01</span><h3>C++ Simulation Core</h3><p>Set-associative cache modeling, LRU eviction, five-stage pipeline behavior, hazard accounting, CPI/IPC and branch predictors.</p></article>
-        <article class="feature"><span>02</span><h3>Parallel Benchmark Engine</h3><p>Custom thread pool using threads, mutexes, condition variables and futures for matrix, convolution and scaling studies.</p></article>
-        <article class="feature"><span>03</span><h3>Analytics Pipeline</h3><p>Structured CSV output feeds Python, Pandas and Matplotlib reports for cache, pipeline and thread-scaling experiments.</p></article>
-        <article class="feature"><span>04</span><h3>Cross-Platform CI</h3><p>CMake and CTest build and validate ArchPulse on Linux and Windows through GitHub Actions.</p></article>
-      </div>
-      <div class="flow panel"><div>C++20 CORE</div><i>→</i><div>CSV METRICS</div><i>→</i><div>PYTHON ANALYTICS</div><i>→</i><div>WEB LAB</div></div>
-    </section>
-  </main>
-
-  <footer><div><b>ArchPulse</b><span>CPU & Heterogeneous Compute Performance Workbench</span></div><a href="https://github.com/Rishikeshsanin/ArchPulse" target="_blank" rel="noreferrer">github.com/Rishikeshsanin/ArchPulse ↗</a></footer>
-  <script src="/app.js"></script>
+  <section id="architecture" class="architecture-section"><div class="section-head"><div><span class="kicker">FULL PROJECT STACK</span><h2>Native engine + analytics + observatory.</h2></div></div><div class="architecture-map"><article><span>01</span><h3>C++20 Core</h3><p>Cache simulation, pipeline modeling, branch predictors, TLB experiments, thread pool and verified compute workloads.</p></article><article><span>02</span><h3>Benchmark Layer</h3><p>Matrix multiplication, convolution, scaling studies, structured CSV metrics and cross-platform CMake/CTest.</p></article><article><span>03</span><h3>Python Analytics</h3><p>Pandas/Matplotlib reporting turns benchmark output into repeatable performance studies.</p></article><article><span>04</span><h3>Web Observatory</h3><p>Worker-backed simulations, trace analysis, WebGPU benchmark, local run vault, export/share and offline PWA shell.</p></article></div><div class="arch-flow panel"><b>TRACE / WORKLOAD</b><i>→</i><b>C++20 ENGINE</b><i>→</i><b>CSV METRICS</b><i>→</i><b>PYTHON ANALYTICS</b><i>→</i><b>WEB OBSERVATORY</b></div></section>
+</main>
+<footer><div><b>ArchPulse Observatory</b><span>Performance engineering without fake numbers.</span></div><div><a href="https://github.com/Rishikeshsanin/ArchPulse" target="_blank" rel="noreferrer">GitHub ↗</a><span>·</span><span id="footerBuild">PWA READY</span></div></footer>
+<div class="toast" id="toast"></div>
+<script src="/app.js"></script>
 </body>
 </html>
