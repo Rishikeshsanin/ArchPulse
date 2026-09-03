@@ -10,7 +10,7 @@ struct MemoryHierarchyConfig {
   std::uint64_t dram_latency_cycles{120};
 };
 struct MemoryHierarchyStats {
-  std::uint64_t accesses{0}, l1_hits{0}, l1_misses{0}, l2_hits{0}, l2_misses{0}, dram_accesses{0}, estimated_cycles{0};
+  std::uint64_t accesses{0}, tlb_hits{0}, tlb_misses{0}, l1_hits{0}, l1_misses{0}, l2_hits{0}, l2_misses{0}, dram_accesses{0}, estimated_cycles{0};
   [[nodiscard]] double l1_hit_rate() const;
   [[nodiscard]] double l2_local_hit_rate() const;
   [[nodiscard]] double tlb_hit_rate() const;
