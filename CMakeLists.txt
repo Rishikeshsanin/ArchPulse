@@ -1,10 +1,18 @@
 cmake_minimum_required(VERSION 3.20)
-project(ArchPulse VERSION 1.0.0 LANGUAGES CXX)
+project(ArchPulse VERSION 2.0.0 LANGUAGES CXX)
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
 option(ARCHPULSE_WARNINGS_AS_ERRORS "Treat compiler warnings as errors" OFF)
-add_library(archpulse_core src/cache.cpp src/pipeline.cpp src/thread_pool.cpp src/benchmark.cpp src/metrics.cpp)
+add_library(archpulse_core
+  src/cache.cpp
+  src/pipeline.cpp
+  src/tlb.cpp
+  src/memory_hierarchy.cpp
+  src/thread_pool.cpp
+  src/benchmark.cpp
+  src/metrics.cpp
+)
 target_include_directories(archpulse_core PUBLIC include)
 if(MSVC)
   target_compile_options(archpulse_core PRIVATE /W4)
